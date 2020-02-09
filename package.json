@@ -1,0 +1,53 @@
+{
+  "scripts": {
+    "test": "mocha --exit"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "escodegen": "^1.12.0",
+    "esprima": "^4.0.1",
+    "mocha": "^6.2.2",
+    "mysql2": "^2.0.2",
+    "rewiremock": "^3.13.9"
+  },
+  "name": "willcore.data",
+  "description": "```javascript\r //index.server.js\r module.exports = (view, willCore, assignables) => {\r     //Create DB\r     //Create DB\r     willCore.myDB = [assignables.mysql,\"connection string\", \"username\",\"password\"];\r     //Create table\r     willCore.myDB.owners = assignables.dbTable;\r     willCore.myDB.owners.name = assignables.dbString;\r     willCore.myDB.owners.auditDate = assignables.dbDate;\r     //default value\r     willCore.myDB.dogs.auditDate = () => new Date();\r     //Create table\r     willCore.myDB.dogs = assignables.dbTable;;\r     willCore.myDB.dogs.name = assignables.dbString;\r     willCore.myDB.dogs.age = assignables.dbInt;\r     //Foreign key (one)\r     willCore.myDB.dogs.owner = willCore.myDB.owners;\r     //Foreign key (many)\r     willCore.myDB.dogs[\"*owners\"] = willCore.myDB.owners;\r     //Updates the db\r     await willCore.myDB();",
+  "version": "1.0.6",
+  "main": "willCoreProxy.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "escodegen": "^1.12.0",
+    "esprima": "^4.0.1",
+    "module-alias": "^2.2.2",
+    "mysql2": "^2.0.2",
+    "willcore.core": "^1.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PhilipCoder/willcore.data.git"
+  },
+  "keywords": [
+    "MySQL",
+    "ORM",
+    "NodeJS"
+  ],
+  "author": "Philip Schoeman",
+  "license": "LGPL-2.1-only",
+  "bugs": {
+    "url": "https://github.com/PhilipCoder/willcore.data/issues"
+  },
+  "homepage": "https://github.com/PhilipCoder/willcore.data#readme",
+  "files": [
+    "/assignables",
+    "/moduleContainer",
+    "/proxies",
+    "/sqlExecutor",
+    "/sqlGeneration",
+    "/willCoreProxy.js"
+  ],
+  "_moduleAliases": {
+    "willcore.mysql": "moduleContainer/willCoreModules.js"
+  }
+}
