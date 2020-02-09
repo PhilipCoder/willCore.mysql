@@ -8,25 +8,25 @@
     "esprima": "^4.0.1",
     "mocha": "^6.2.2",
     "mysql2": "^2.0.2",
-    "rewiremock": "^3.13.9"
+    "rewiremock": "^3.13.9",
+    "module-alias": "^2.2.2"
   },
-  "name": "willcore.data",
+  "name": "willcore.mysql",
   "description": "```javascript\r //index.server.js\r module.exports = (view, willCore, assignables) => {\r     //Create DB\r     //Create DB\r     willCore.myDB = [assignables.mysql,\"connection string\", \"username\",\"password\"];\r     //Create table\r     willCore.myDB.owners = assignables.dbTable;\r     willCore.myDB.owners.name = assignables.dbString;\r     willCore.myDB.owners.auditDate = assignables.dbDate;\r     //default value\r     willCore.myDB.dogs.auditDate = () => new Date();\r     //Create table\r     willCore.myDB.dogs = assignables.dbTable;;\r     willCore.myDB.dogs.name = assignables.dbString;\r     willCore.myDB.dogs.age = assignables.dbInt;\r     //Foreign key (one)\r     willCore.myDB.dogs.owner = willCore.myDB.owners;\r     //Foreign key (many)\r     willCore.myDB.dogs[\"*owners\"] = willCore.myDB.owners;\r     //Updates the db\r     await willCore.myDB();",
-  "version": "1.0.6",
-  "main": "willCoreProxy.js",
+  "version": "1.0.0",
+  "main": "moduleContainer/willCoreModules.js",
   "directories": {
     "test": "test"
   },
   "dependencies": {
     "escodegen": "^1.12.0",
     "esprima": "^4.0.1",
-    "module-alias": "^2.2.2",
     "mysql2": "^2.0.2",
     "willcore.core": "^1.0.2"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PhilipCoder/willcore.data.git"
+    "url": "git+https://github.com/PhilipCoder/willCore.mysql.git"
   },
   "keywords": [
     "MySQL",
@@ -36,9 +36,9 @@
   "author": "Philip Schoeman",
   "license": "LGPL-2.1-only",
   "bugs": {
-    "url": "https://github.com/PhilipCoder/willcore.data/issues"
+    "url": "https://github.com/PhilipCoder/willCore.mysql/issues"
   },
-  "homepage": "https://github.com/PhilipCoder/willcore.data#readme",
+  "homepage": "https://github.com/PhilipCoder/willCore.mysql#readme",
   "files": [
     "/assignables",
     "/moduleContainer",

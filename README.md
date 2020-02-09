@@ -1,12 +1,12 @@
 <p align="center">
 <img src="res/WillCoreLogo.png"  />
-<h1 align="center">WillCore.Data</h1>
+<h1 align="center">WillCore.MySQL</h1>
 <h5 align="center">A MySQL ORM for NodeJS - By Philip Schoeman</h5>
 </p>
 
 ___
 
-> WillCore.Data is a small framework that provides ORM functionality for MySQL. Features:
+> WillCore.MySQL is a small framework that provides ORM functionality for MySQL. Features:
 > * Code-first database generation.
 > * Queries via JavaScript like syntax.
 > * Database migrations.
@@ -16,7 +16,7 @@ ___
 - [Table of contents](#table-of-contents)
   - [A) Assignable-Introduction](#a-assignable-introduction)
     - [The syntax for assignables is:](#the-syntax-for-assignables-is)
-- [1 Using WillCore.Data](#1-using-willcoredata)
+- [1 Using WillCore.MySQL](#1-using-willcoremysql)
     - [Install via NPM:](#install-via-npm)
 - [2 Defining a database](#2-defining-a-database)
   - [2.1 Define a database instance](#21-define-a-database-instance)
@@ -70,7 +70,7 @@ ___
 ### A) Assignable-Introduction
 ___
 
-In order to make the API as simple as possible, WillCore.Data uses the concept of assignables to instantiate and assign state to internal objects. The concept might be a bit weird at first, but it simplifies the API.
+In order to make the API as simple as possible, WillCore.MySQL uses the concept of assignables to instantiate and assign state to internal objects. The concept might be a bit weird at first, but it simplifies the API.
 
 <br/>
 
@@ -108,7 +108,7 @@ When the class is assigned to $elementId, the framework checks if the class inhe
  #### The syntax for assignables is:
 > proxyInstance.newPropertyName.newObjectType = assignmentValues (optional)
 
-* __Proxy Instance :__ An instance of a proxy that supports assignables. In the case of WillCore.Data, it can be the main proxy, a database proxy, table proxy or column proxy.
+* __Proxy Instance :__ An instance of a proxy that supports assignables. In the case of WillCore.MySQL, it can be the main proxy, a database proxy, table proxy or column proxy.
 * __New Property Name :__  The name of the property that has to be created or set on the proxy.
 * __New Object Type :__ The type of the value that is created on the parent proxy.
 
@@ -116,17 +116,17 @@ When the class is assigned to $elementId, the framework checks if the class inhe
 
 ___
 
-## 1 Using WillCore.Data
+## 1 Using WillCore.MySQL
 
 #### Install via NPM:
 
->npm install willcore.data
+>npm install willcore.mysql
 
 ## 2 Defining a database
 All database operations is done via the willCore proxy. The willCore proxy factory can be imported from:
 
 ```javascript
-const willCoreProxyFactory = require("willCore.data");
+const willCoreProxyFactory = require("willCore.core");
 ```
 
 An instance of the database proxy can be created via the new() function on the willCoreProxyFactory. 
@@ -134,7 +134,7 @@ An instance of the database proxy can be created via the new() function on the w
 __The database definition should be added to a function that gets called when the program starts up or only when the database should be created. It should not be called for every server request. Or the database can be defined as a singleton:__
 
 ```javascript
-const willCoreProxyFactory = require("willCore.data");
+const willCoreProxyFactory = require("willCore.core");
 //Creates an instance of the database proxy via the factory method
 let dbProxy = willCoreProxyFactory.new();
 
@@ -149,7 +149,7 @@ A database can be defined by assigning an array to a "mysql" assignable database
 3. The MySQL server password.
 
 ```javascript
-const willCoreProxyFactory = require("willCore.data");
+const willCoreProxyFactory = require("willCore.core");
 //Creates an instance of the database proxy via the factory method
 let dbContainerProxy = willCoreProxyFactory.new();
 //Defining a database named testDB on localhost
