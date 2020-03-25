@@ -12,8 +12,7 @@ class mysqlProxy extends baseProxy{
      * @type {InstanceType<mysqlProxy>}
      */
     static new(mysqlAssignable){
-        let result= new Proxy(new mysqlProxy(), new mysqlProxyHandler());
-        result._mysqlAssignable = mysqlAssignable;
+        let result= new Proxy(new mysqlProxy(), new mysqlProxyHandler(mysqlAssignable));
         return result;
     }
 }

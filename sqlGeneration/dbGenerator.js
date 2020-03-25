@@ -11,7 +11,7 @@ class dbGenerator {
      */
     constructor(mySqlProxy, queryExecutor) {
         this._proxy = mySqlProxy;
-        this._dbInfo = mySqlProxy._mysqlAssignable.dbInfo;
+        this._dbInfo = mySqlProxy._assignable.dbInfo;
         this._queryExecutor = queryExecutor;
         this._comparisonInfo = null;
         this._comparisonTarget = null;
@@ -54,7 +54,7 @@ class dbGenerator {
 
     /** Gets the database generation SQL */
     get sql() {
-        let dbType = this._proxy ? this._proxy._mysqlAssignable.type : "mySQL";
+        let dbType = this._proxy ? this._proxy._assignable.type : "mySQL";
         let db = require(`./components/${dbType}/db.js`);
         return new db(this.comparisonTarget, this.comparisonSource, this._dropDB).getSQL();
     }

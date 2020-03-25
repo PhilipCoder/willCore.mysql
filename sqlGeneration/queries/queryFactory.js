@@ -50,7 +50,7 @@ class queryFactory {
         return new Promise(async (resolve, reject) => {
             let parameters = queryParameters || this.queryAble.getValues().filter.parameters;
             let sql = querySQL || this.getSQL();
-            let results = await this.db._mysqlAssignable.queryExecutor.runQuery(sql, parameters);
+            let results = await this.db._assignable.queryExecutor.runQuery(sql, parameters);
             resolve(new entityMapper(this.db).mapValues(results));
         });
     }

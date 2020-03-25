@@ -19,7 +19,7 @@ class dbTable extends assignable {
 
     completed() {
         this.tableInfo.name = this.propertyName;
-        this.parentProxy._mysqlAssignable.dbInfo.tables.push(this.tableInfo);
+        this.parentProxy._assignable.dbInfo.tables.push(this.tableInfo);
     }
 }
 

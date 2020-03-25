@@ -20,7 +20,7 @@ class dbColumn extends assignable {
     completed() {
         this.columnInfo.name = this.propertyName;
         this.columnInfo.type = this.bindedValues.string[0];
-        this.parentProxy._dbTableAssignable.tableInfo.columns.push(this.columnInfo);
+        this.parentProxy._assignable.tableInfo.columns.push(this.columnInfo);
     }
 }
 

@@ -13,8 +13,7 @@ class dbColumnProxy extends baseProxy {
      * @type {InstanceType<mysqlProxy>}
      */
     static new(dbColumnAssignable, dbAssignable) {
-        let result = new Proxy(new dbColumnProxy(), new dbColumnProxyHandler());
-        result._dbColumnAssignable = dbColumnAssignable;
+        let result = new Proxy(new dbColumnProxy(), new dbColumnProxyHandler(dbColumnAssignable));
         return result;
     }
 }

@@ -15,21 +15,21 @@ class reference extends assignable {
             throw "Invalid reference multiplication.";
         }
         let target = this.bindedValues.object[0];
-        let targetColumnName = target._dbColumnAssignable.columnInfo.name;
-        let targetTableName = target._dbColumnAssignable.parentProxy._dbTableAssignable.tableInfo.name;
+        let targetColumnName = target._assignable.columnInfo.name;
+        let targetTableName = target._assignable.parentProxy._assignable.tableInfo.name;
 
-        let sourceColumnName = this.parentProxy._dbColumnAssignable.columnInfo.name;
-        let sourceTableName = this.parentProxy._dbColumnAssignable.parentProxy._dbTableAssignable.tableInfo.name;
+        let sourceColumnName = this.parentProxy._assignable.columnInfo.name;
+        let sourceTableName = this.parentProxy._assignable.parentProxy._assignable.tableInfo.name;
 
         multi = multi.split("_");
 
-        target._dbColumnAssignable.columnInfo.reference = {
+        target._assignable.columnInfo.reference = {
             table: sourceTableName,
             column: sourceColumnName,
             multiplication: multi[1]
         };
 
-        this.parentProxy._dbColumnAssignable.columnInfo.reference = {
+        this.parentProxy._assignable.columnInfo.reference = {
             table: targetTableName,
             column: targetColumnName,
             multiplication: multi[0]

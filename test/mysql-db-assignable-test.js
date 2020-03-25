@@ -15,10 +15,10 @@ describe('mysql-db-assignable-test', function () {
         let proxy = willCoreProxy.new();
         proxy.myDB.mysql = [connectionString, userName, password];
         assert(proxy.myDB instanceof mysqlProxy);
-        assert(proxy.myDB._mysqlAssignable.dbInfo.name == dbName);
-        assert(proxy.myDB._mysqlAssignable.dbInfo.connectionString == connectionString);
-        assert(proxy.myDB._mysqlAssignable.dbInfo.userName == userName);
-        assert(proxy.myDB._mysqlAssignable.dbInfo.password == password);
+        assert(proxy.myDB._assignable.dbInfo.name == dbName);
+        assert(proxy.myDB._assignable.dbInfo.connectionString == connectionString);
+        assert(proxy.myDB._assignable.dbInfo.userName == userName);
+        assert(proxy.myDB._assignable.dbInfo.password == password);
 
     });
     it('create-table', function () {
@@ -26,7 +26,7 @@ describe('mysql-db-assignable-test', function () {
         proxy.myDB.mysql = [connectionString, userName, password];
         proxy.myDB.testTable.table;
         assert(proxy.myDB[tableName] instanceof dbTableProxy);
-        assert(proxy.myDB[tableName]._dbTableAssignable.tableInfo.name == tableName);
+        assert(proxy.myDB[tableName]._assignable.tableInfo.name == tableName);
     });
     it('create-column', function () {
         let proxy = willCoreProxy.new();
@@ -34,7 +34,7 @@ describe('mysql-db-assignable-test', function () {
         proxy.myDB.testTable.table;
         proxy.myDB.testTable.name.column.int;
         assert(proxy.myDB.testTable.name instanceof dbColumnProxy);
-        assert(proxy.myDB.testTable.name._dbColumnAssignable.columnInfo.name == "name");
+        assert(proxy.myDB.testTable.name._assignable.columnInfo.name == "name");
     });
     it('test-db-json', function () {
         let targetJSON = `{"name":"myDB","connectionString":"myConnection","userName":"myUser","password":"myPassword","tables":[{"name":"user","columns":[{"name":"name","type":"string"},{"name":"surname","type":"string"},{"name":"age","type":"int"}]},{"name":"product","columns":[{"name":"name","type":"string"},{"name":"description","type":"string"},{"name":"price","type":"float"}]}]}`;
@@ -48,7 +48,7 @@ describe('mysql-db-assignable-test', function () {
         proxy.myDB.product.name.column.string;
         proxy.myDB.product.description.column.string;
         proxy.myDB.product.price.column.float;
-        let json = proxy.myDB._mysqlAssignable.getDBJson();
+        let json = proxy.myDB._assignable.getDBJson();
         assert(targetJSON === json,"The generated DB JSON is incorrect."+targetJSON);
     });
     it('test-primary-key', function () {
@@ -65,7 +65,7 @@ describe('mysql-db-assignable-test', function () {
         proxy.myDB.product.id.primary;
         proxy.myDB.product.name.column.string;
 
-        let json = proxy.myDB._mysqlAssignable.getDBJson();
+        let json = proxy.myDB._assignable.getDBJson();
         assert(targetJSON === json,"The generated DB JSON is incorrect.");
     });
     it('test-foreign-key', function () {
@@ -83,8 +83,8 @@ describe('mysql-db-assignable-test', function () {
         proxy.myDB.product.owner.column.int;
         proxy.myDB.product.owner.one_many.reference = proxy.myDB.user.id;
 
-        let productOwnerColumn = proxy.myDB.product.owner._dbColumnAssignable.columnInfo;
-        let userIdColumn = proxy.myDB.user.id._dbColumnAssignable.columnInfo;
+        let productOwnerColumn = proxy.myDB.product.owner._assignable.columnInfo;
+        let userIdColumn = proxy.myDB.user.id._assignable.columnInfo;
 
         assert(productOwnerColumn.reference.column === "id");
         assert(productOwnerColumn.reference.table === "user");

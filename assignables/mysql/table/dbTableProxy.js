@@ -13,8 +13,7 @@ class dbTableProxy extends baseProxy{
      * @type {InstanceType<mysqlProxy>}
      */
     static new(dbTableAssignable){
-        let result = new Proxy(new dbTableProxy(), new dbTableProxyHandler());
-        result._dbTableAssignable = dbTableAssignable;
+        let result = new Proxy(new dbTableProxy(), new dbTableProxyHandler(dbTableAssignable));
         return result;
     }
 }

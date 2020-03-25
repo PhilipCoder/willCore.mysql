@@ -16,7 +16,7 @@ const migrationSourceStub = {
         proxy.myDB.product.owner.column.int;
         proxy.myDB.product.owner = proxy.myDB.user.id;
 
-        return proxy.myDB._mysqlAssignable.dbInfo;
+        return proxy.myDB._assignable.dbInfo;
     }
 };
 
@@ -34,7 +34,7 @@ const migrationSourceNoFKStub = {
         proxy.myDB.product.id.primary;
         proxy.myDB.product.name.column.string;
 
-        return proxy.myDB._mysqlAssignable.dbInfo;
+        return proxy.myDB._assignable.dbInfo;
     }
 };
 
@@ -53,7 +53,7 @@ const migrationSourceNoFKColStub = {
         proxy.myDB.product.name.column.string;
         proxy.myDB.product.owner.column.int;
 
-        return proxy.myDB._mysqlAssignable.dbInfo;
+        return proxy.myDB._assignable.dbInfo;
     }
 };
 
@@ -80,7 +80,7 @@ const migrationSourceMultipuleFKStub = {
         proxy.myDB.profile.person.column.int;
         proxy.myDB.profile.person = proxy.myDB.user.id;
 
-        return proxy.myDB._mysqlAssignable.dbInfo;
+        return proxy.myDB._assignable.dbInfo;
     }
 };
 
@@ -114,7 +114,7 @@ const migrationSourceManyFKStub = {
         proxy.myDB.productDetails.product.column.int;
         proxy.myDB.productDetails.product = proxy.myDB.product.id;
 
-        return proxy.myDB._mysqlAssignable.dbInfo;
+        return proxy.myDB._assignable.dbInfo;
     }
 };
 
@@ -306,7 +306,7 @@ const manyFKCreateDB = () =>{
     proxy.myDB.productDetails.name.column.string;
     proxy.myDB.productDetails.product.column.int;
     proxy.myDB.productDetails.product = proxy.myDB.product.id;
-    proxy.myDB._mysqlAssignable.dbInfo.instantiated = true;
+    proxy.myDB._assignable.dbInfo.instantiated = true;
     return proxy.myDB;
 };
 

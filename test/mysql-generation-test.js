@@ -13,7 +13,7 @@ describe('mysql-generation-test', function () {
       let proxy = willCoreProxy.new();
       proxy.myDB.mysql = [connectionString, userName, password];
 
-      let sqlCreator = new db(proxy.myDB._mysqlAssignable.dbInfo);
+      let sqlCreator = new db(proxy.myDB._assignable.dbInfo);
       let sql = sqlCreator.getSQL();
       assert(sql === "-- DB does not exists, creating DB.\nCREATE DATABASE myDB;\nUSE myDB;",sql)
    });
@@ -23,7 +23,7 @@ describe('mysql-generation-test', function () {
       proxy.myDB.mysql = [connectionString, userName, password];
       proxy.myDB.product.table;
 
-      let sqlCreator = new table(proxy.myDB.product._dbTableAssignable.tableInfo);
+      let sqlCreator = new table(proxy.myDB.product._assignable.tableInfo);
       let sql = sqlCreator.getSQL();
       assert(sql === "")
    });
@@ -97,7 +97,7 @@ describe('mysql-generation-test', function () {
       proxy.myDB.mysql = [connectionString, userName, password];
       proxy.myDB.product.table;
       proxy.myDB.product.name.column.string;
-      let col = new column(proxy.myDB.product.name._dbColumnAssignable.columnInfo);
+      let col = new column(proxy.myDB.product.name._assignable.columnInfo);
       let sqlType = col.getSQL();
       assert(sqlType === "`name` varchar(256) null");
    });
@@ -107,7 +107,7 @@ describe('mysql-generation-test', function () {
       proxy.myDB.product.table;
       proxy.myDB.product.id.column.int;
       proxy.myDB.product.id.primary;
-      let col = new column(proxy.myDB.product.id._dbColumnAssignable.columnInfo);
+      let col = new column(proxy.myDB.product.id._assignable.columnInfo);
       let sqlType = col.getSQL();
       assert(sqlType === "`id` int AUTO_INCREMENT PRIMARY KEY");
    });
@@ -120,7 +120,7 @@ describe('mysql-generation-test', function () {
       proxy.myDB.product.id.primary;
       proxy.myDB.product.name.column.string;
       proxy.myDB.product.audit.column.date;
-      let col = new table(proxy.myDB.product._dbTableAssignable.tableInfo);
+      let col = new table(proxy.myDB.product._assignable.tableInfo);
       let sqlType = col.getSQL();
       assert(sqlType === `
 -- Create table.
@@ -149,7 +149,7 @@ CREATE TABLE \`product\` (
       proxy.myDB.product.name.column.string;
       proxy.myDB.product.audit.column.date;
 
-      let sql = new table(proxy.myDB.product._dbTableAssignable.tableInfo).getSQL();
+      let sql = new table(proxy.myDB.product._assignable.tableInfo).getSQL();
    });
 
    it('test-db-create-sql', function () {
@@ -167,7 +167,7 @@ CREATE TABLE \`product\` (
       proxy.myDB.product.owner.column.int;
       proxy.myDB.product.owner = proxy.myDB.user.id;
 
-      let sqlCreator = new db(proxy.myDB._mysqlAssignable.dbInfo);
+      let sqlCreator = new db(proxy.myDB._assignable.dbInfo);
       let sql = sqlCreator.getSQL();
    });
 });

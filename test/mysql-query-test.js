@@ -43,11 +43,11 @@ describe('mysql-query-test', function () {
         proxyInstance.testDB.product.name.column.string;
         proxyInstance.testDB.product.description.column.string;
         proxyInstance.testDB.product.buyer = proxyInstance.testDB.users.id;
-        proxyInstance.testDB._mysqlAssignable.dbInfo.instantiated = true;
+        proxyInstance.testDB._assignable.dbInfo.instantiated = true;
         let db = proxyInstance.testDB.queryDB;
         let newUserA = {name:"john",email:"aaa@gmail.com"};
         db.users[12] = newUserA;
-        let contextStateManager = db._mysqlAssignable.contextStateManager;
+        let contextStateManager = db._assignable.contextStateManager;
         assert(contextStateManager.operations.items.length === 1,"Updated values not in queue");
         assert(contextStateManager.operations.items[0].constructor.name === "updateOperation","Queued operations not of the right type.");
         assert(contextStateManager.operations.items[0].table === "users","Queued update operation is not on the right table.");

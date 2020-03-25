@@ -5,8 +5,8 @@ const assignable = require("willcore.core/assignable/assignable");
 const dbColumnProxy = require("../../../assignables/mysql/column/dbColumnProxy.js");
 
 class dbTableProxyHandler extends assignableProxyHandler {
-  constructor() {
-    super();
+  constructor(assignable) {
+    super(assignable);
     this.setTraps.unshift(this.assignReference);
     this.setTraps.unshift(this.assignReferenceNewColumn);
     this.setTraps.unshift(this.deleteRowAssignment);
@@ -19,14 +19,14 @@ class dbTableProxyHandler extends assignableProxyHandler {
 
   assignReference(target, property, value, proxy) {
     if (value instanceof columnProxy && target[property] instanceof columnProxy) {
-      let targetColumnName = value._dbColumnAssignable.columnInfo.name;
-      let targetTableName = value._dbColumnAssignable.parentProxy._dbTableAssignable.tableInfo.name;
-      let tableName = proxy[property]._dbColumnAssignable.parentProxy._dbTableAssignable.tableInfo.name;
-      target[property]._dbColumnAssignable.columnInfo.reference = {
+      let targetColumnName = value._assignable.columnInfo.name;
+      let targetTableName = value._assignable.parentProxy._assignable.tableInfo.name;
+      let tableName = proxy[property]._assignable.parentProxy._assignable.tableInfo.name;
+      target[property]._assignable.columnInfo.reference = {
         table: targetTableName,
         column: targetColumnName,
         thisTable: tableName,
-        primary: !value._dbColumnAssignable.columnInfo.reference
+        primary: !value._assignable.columnInfo.reference
       };
       return { value: true };
     }
@@ -36,17 +36,17 @@ class dbTableProxyHandler extends assignableProxyHandler {
   assignReferenceNewColumn(target, property, value, proxy) {
     if (value instanceof columnProxy && !target[property]) {
       proxy[property].column.int;
-      target[property]._dbColumnAssignable.columnInfo.type = value._dbColumnAssignable.columnInfo.type;
-      target[property]._dbColumnAssignable.columnInfo.size = value._dbColumnAssignable.columnInfo.size;
+      target[property]._assignable.columnInfo.type = value._assignable.columnInfo.type;
+      target[property]._assignable.columnInfo.size = value._assignable.columnInfo.size;
 
-      let targetColumnName = value._dbColumnAssignable.columnInfo.name;
-      let targetTableName = value._dbColumnAssignable.parentProxy._dbTableAssignable.tableInfo.name;
-      let tableName = proxy[property]._dbColumnAssignable.parentProxy._dbTableAssignable.tableInfo.name;
-      target[property]._dbColumnAssignable.columnInfo.reference = {
+      let targetColumnName = value._assignable.columnInfo.name;
+      let targetTableName = value._assignable.parentProxy._assignable.tableInfo.name;
+      let tableName = proxy[property]._assignable.parentProxy._assignable.tableInfo.name;
+      target[property]._assignable.columnInfo.reference = {
         table: targetTableName,
         column: targetColumnName,
         thisTable: tableName,
-        primary: !value._dbColumnAssignable.columnInfo.reference
+        primary: !value._assignable.columnInfo.reference
       };
       return { value: true };
     }
@@ -55,9 +55,9 @@ class dbTableProxyHandler extends assignableProxyHandler {
 
   deleteRowAssignment(target, property, value, proxy) {
     if (!property.startsWith("_") && value === undefined) {
-      let statemanager = proxy._dbTableAssignable.parentProxy._mysqlAssignable.contextStateManager;
-      let primaryColumn = proxy._dbTableAssignable.tableInfo.columns.filter(x=>x.primary)[0].name;
-      statemanager.deleteRow(proxy._dbTableAssignable.tableInfo.name, primaryColumn,property);
+      let statemanager = proxy._assignable.parentProxy._assignable.contextStateManager;
+      let primaryColumn = proxy._assignable.tableInfo.columns.filter(x=>x.primary)[0].name;
+      statemanager.deleteRow(proxy._assignable.tableInfo.name, primaryColumn,property);
       return { value: true };
     }
     return { value: false, status: false };
@@ -65,12 +65,12 @@ class dbTableProxyHandler extends assignableProxyHandler {
 
   addRowAssignment(target, property, value, proxy) {
     if (property === "+" && value !== undefined) {
-      let statemanager = proxy._dbTableAssignable.parentProxy._mysqlAssignable.contextStateManager;
+      let statemanager = proxy._assignable.parentProxy._assignable.contextStateManager;
       if (Array.isArray(value)){
         value.forEach(item=>{
-          statemanager.addRow(proxy._dbTableAssignable.tableInfo.name,item);});
+          statemanager.addRow(proxy._assignable.tableInfo.name,item);});
       }else{
-        statemanager.addRow(proxy._dbTableAssignable.tableInfo.name,value);
+        statemanager.addRow(proxy._assignable.tableInfo.name,value);
       }
       return { value: true };
     }
@@ -79,9 +79,9 @@ class dbTableProxyHandler extends assignableProxyHandler {
 
   updateRowAssignment(target, property, value, proxy) {
     if (!property.startsWith("_") && value !== undefined && typeof value === "object" && (value instanceof assignable || value instanceof dbColumnProxy) === false) {
-      let statemanager = proxy._dbTableAssignable.parentProxy._mysqlAssignable.contextStateManager;
-      let primaryColumn = proxy._dbTableAssignable.tableInfo.columns.filter(x=>x.primary)[0].name;
-      statemanager.updateField(proxy._dbTableAssignable.tableInfo.name, value, primaryColumn, property);
+      let statemanager = proxy._assignable.parentProxy._assignable.contextStateManager;
+      let primaryColumn = proxy._assignable.tableInfo.columns.filter(x=>x.primary)[0].name;
+      statemanager.updateField(proxy._assignable.tableInfo.name, value, primaryColumn, property);
       return { value: true };
     }
     return { value: false, status: false };
@@ -90,8 +90,8 @@ class dbTableProxyHandler extends assignableProxyHandler {
   getAddFunction(target, property, proxy) {
     if (property === "add") {
       let addFunction = function (data) {
-        let statemanager = proxy._dbTableAssignable.parentProxy._mysqlAssignable.contextStateManager;
-        let tableName = proxy._dbTableAssignable.tableInfo.name;
+        let statemanager = proxy._assignable.parentProxy._assignable.contextStateManager;
+        let tableName = proxy._assignable.tableInfo.name;
         statemanager.addRow(tableName, data);
       };
       addFunction.bind(proxy);
@@ -102,7 +102,7 @@ class dbTableProxyHandler extends assignableProxyHandler {
 
   getQueryableFunction(target, property, proxy) {
     if (property === "filter" || property === "select" || property === "include" || property === "sort" || property === "take" || property === "skip") {
-      let factory = new queryFactory(proxy._dbTableAssignable.parentProxy, proxy._dbTableAssignable.tableInfo.name);
+      let factory = new queryFactory(proxy._assignable.parentProxy, proxy._assignable.tableInfo.name);
       let query = factory.getQuery();
       return { value: query[property], status: true };
     }
@@ -112,9 +112,9 @@ class dbTableProxyHandler extends assignableProxyHandler {
   deleteRow(target, property,proxy) {
     if (property === "delete") {
       let deleteFunction = function (primaryIdentifier) {
-        let statemanager = proxy._dbTableAssignable.parentProxy._mysqlAssignable.contextStateManager;
-        let primaryColumn = proxy._dbTableAssignable.tableInfo.columns.filter(x=>x.primary)[0].name;
-        statemanager.deleteRow(proxy._dbTableAssignable.tableInfo.name, primaryColumn,primaryIdentifier);
+        let statemanager = proxy._assignable.parentProxy._assignable.contextStateManager;
+        let primaryColumn = proxy._assignable.tableInfo.columns.filter(x=>x.primary)[0].name;
+        statemanager.deleteRow(proxy._assignable.tableInfo.name, primaryColumn,primaryIdentifier);
       };
       deleteFunction.bind(proxy);
       return { value: deleteFunction, status: true };

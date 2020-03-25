@@ -7,7 +7,7 @@ const dbObjects = {};
 class proxyMapper {
     constructor(db) {
         this.db = db;
-        this.dbInfo = db._mysqlAssignable.dbInfo;
+        this.dbInfo = db._assignable.dbInfo;
     }
 
     mapValues(values) {
