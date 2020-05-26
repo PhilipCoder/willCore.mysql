@@ -182,6 +182,7 @@ class queryGenerator {
         queryParts.forEach(queryPart => {
             if (!isTable && queryPart.type === "Identifier" && queryPart.value === this.tableName) {
                 isTable = true;
+                lastTable = queryPart.value;
             }
             else if (isTable && queryParts[index - 1].type === "Punctuator" && queryParts[index - 1].value === "." && queryPart.type === "Identifier") {
                 let isFunction = index < queryParts.length - 2 && queryParts[index + 1].type === "Punctuator" && queryParts[index + 1].value === "(";
