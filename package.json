@@ -45,6 +45,7 @@
     "/proxies",
     "/sqlExecutor",
     "/sqlGeneration",
+    "/intellisense",
     "/willCoreProxy.js"
   ],
   "_moduleAliases": {

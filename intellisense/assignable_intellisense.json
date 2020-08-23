@@ -1,0 +1,105 @@
+{
+    "initFiles": [],
+    "mysql": {
+        "parentType": "core",
+        "description": "Defines a MySQL database.",
+        "hasName": true,
+        "assignmentValues": [
+            {
+                "type": "string",
+                "description": "MySQL connection string."
+            },
+            {
+                "type": "string",
+                "description": "MySQL username."
+            },
+            {
+                "type": "string",
+                "description": "MySQL password."
+            }
+        ]
+    },
+    "table": {
+        "parentType": "mysql",
+        "description": "Defines a MySQL table.",
+        "hasName": true,
+        "assignmentValues": []
+    },
+    "column": {
+        "parentType": "table",
+        "description": "Defines a column on a table.",
+        "hasName": true,
+        "assignmentValues": [
+            {
+                "type": "string",
+                "description": "Column type: int, smallInt, tinyInt, bigInt, string, nstring, decimal, float, date, bool or text."
+            }
+        ]
+    },
+    "primary": {
+        "parentType": "column",
+        "description": "Defines a column as a primary key.",
+        "hasName": false,
+        "assignmentValues": []
+    },
+    "init": {
+        "parentType": "mysql",
+        "description": "Function to initialize a DB.",
+        "hasName": false,
+        "assignmentValues": []
+    },
+    "queryDB": {
+        "parentType": "mysql",
+        "description": "Property that returns a new instance of the queryable database.",
+        "hasName": false,
+        "assignmentValues": []
+    },
+    "add": {
+        "parentType": "table",
+        "description": "Function to add a record to a table.",
+        "hasName": false,
+        "assignmentValues": []
+    },
+    "delete": {
+        "parentType": "table",
+        "description": "Deletes an entry from a table.",
+        "hasName": false,
+        "assignmentValues": []
+    },
+    "filter": {
+        "parentType": "table",
+        "description": "Where query on a table.",
+        "hasName": false,
+        "assignmentValues": []
+    },
+    "include": {
+        "parentType": "table",
+        "description": "Includes a table in a query.",
+        "hasName": false,
+        "assignmentValues": []
+    },
+    "sort": {
+        "parentType": "table",
+        "description": "Sorts the result of a query.",
+        "hasName": false,
+        "assignmentValues": []
+    },
+    "skip": {
+        "parentType": "table",
+        "description": "Skip n amount of the results of a query.",
+        "hasName": false,
+        "assignmentValues": []
+    },
+    "take": {
+        "parentType": "table",
+        "description": "Take n amount of the results of a query.",
+        "hasName": false,
+        "assignmentValues": []
+    },
+    "index": {
+        "parentType": "column",
+        "description": "Defines a database index on a column.",
+        "hasName": false,
+        "assignmentValues": []
+    }
+}
